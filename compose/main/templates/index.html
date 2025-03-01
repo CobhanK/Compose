@@ -1,1 +1,11 @@
-<h1>Hello World from index</h1>
+{% extends "master.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <h1>Compose Homepage</h1>
+    <a href="/record">Record</a>
+    <a href="/editor">Editor</a>
+
+{% endblock %}
