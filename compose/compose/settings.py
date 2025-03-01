@@ -54,7 +54,9 @@ ROOT_URLCONF = 'compose.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [ #BASE_DIR / "compose/static",
+                    BASE_DIR / "main/templates", 
+                    BASE_DIR / "editor/templates"], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
