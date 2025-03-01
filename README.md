@@ -1,2 +1,2 @@
 # Compose
-HACKCU 25 Project w/ Owen and RYan
+HACKCU 25 Project w/ Owen and Ryan
