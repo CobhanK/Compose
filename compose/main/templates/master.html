@@ -1,109 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<link rel="stylesheet" href="/static/style.css">
 <head>
-  <title>{% block title %} Compose {% endblock %}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Helvetica, sans-serif;
+            margin: 0;
+            background-color: rgb(25, 24, 24);
+            background-image: url("/static/band_photo.png"); 
+            background-size: cover;  
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+        }
+
+
+        /*hamburger menu code*/
+        .menu {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+        }
+        .menu button {
+            background: none;
+            border: none;
+            color: rgb(255, 255, 255);
+            font-size: 55px; /*hamburger size*/
+            cursor: pointer;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            font-size: 26px; /*font of dropdown text*/
+            font-family: Helvetica, sans-serif;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+           height: 8em;
+           width: 7.5em;
+            padding: 10px;
+       
+        }
+        .dropdown a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            display: flex;
+            align-items:
+            center;
+            padding: 5px 0;
+        }
+        .dropdown a img {
+            width: 40px;
+            height: 40px;
+            margin-right: 20px;
+        }
+        
+        .dropdown b {
+            color: rgb(13, 50, 35);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .dropdown c {
+            color: rgb(23, 11, 46);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .menu:hover .dropdown {
+            display: block;
+        } 
+        
+
+
+
+     /*Main Record Button Code*/
+        .large-button {
+            width: 450px;
+            height: 450px;
+            border-radius: 1000px;
+            border-width: 6.5px;
+            border-style: solid;
+            box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.438);
+             -webkit-transition: box-shadow 0.25s;
+             transition: box-shadow 0.25s;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .large-button {
+            background-image: linear-gradient(-45deg, #b81a1aba, #c01c1c );
+            z-index: 1;
+        }
+   
+        .large-button:hover {
+        box-shadow: 0px 1px 16px rgba(255, 255, 255, 0.438);
+        background-image: linear-gradient(-45deg, #b81a1a3d, #c01c1c34 );
+        }
+
+    
+        /*Code for upload file button*/
+        .small-button {
+            padding: 0.4em 1.6em;
+            margin: 0 0.em 0.1em 0;
+            border: 0.1em solid rgb(255, 255, 255, .3);
+            border-radius: 3em;
+            text-decoration: none;
+            font-family: "Helvetica", sans-serif;
+            font-weight: 300;
+            color: #ffffff;
+            text-shadow: 0 0.04em 0.04em rgba(255, 255, 255, 0.253);
+            text-align: center;
+            transition: all 0.2s;
+        }
+       
+        .small-button:hover {
+            color: black;
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
 </head>
-<style>
-  body {
-      background-color: rgba(240, 213, 177, 0.642);
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      font-family: Helvetica, sans-serif;
-  }
-  .menu {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-  }
-  #canvas-container {
-    width: 100;
-    text-align: center;
-  }
-  canvas{
-    display: inline;
-  }
-  .menu button {
-      background: none;
-      border: none;
-      color: rgb(0, 0, 0);
-      font-size: 40px;
-      cursor: pointer;
-  }
-  .dropdown {
-      display: none;
-      position: absolute;
-      right: 0;
-      background: rgb(255, 255, 255);
-      border: 1px solid rgb(0, 0, 0);
-      padding: 20px;
-  }
-  .dropdown a {
-      color: rgb(0, 0, 0);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding: 5px 0;
-  }
-  .dropdown a img {
-      width: 40px;
-      height: 40px;
-      margin-right: 20px;
-  }
-  
-  .dropdown b {
-      color: rgb(13, 50, 35);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding: 5px 0;
-  }
-
-  .dropdown c {
-      color: rgb(23, 11, 46);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding: 5px 0;
-  }
-
-  .menu:hover .dropdown {
-      display: block;
-  }
-  .large-button {
-      width: 450px;
-      height: 450px;
-      background-color: rgb(27, 96, 49);
-      border-radius: 50%;
-      color: rgb(255, 255, 255);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      cursor: pointer;
-      border: none;
-      margin-bottom: 20px;
-  }
-  .small-button {
-      width: 300px;
-      height: 35px;
-      background-color: rgb(62, 199, 62);
-      border-radius: 20px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-  }
-</style>
 <body>
 
-{% block content %}
-{% endblock %}
+    <div class="menu">
+        <button>&#9776;</button>
+        <div class="dropdown">
+            <a href="#"><img src="/static/transparent.png" alt="Icon 2"> About Us</a>
+            <a href="#"><img src="/static/history.png" alt="Icon 2"> History</a>
+            <a href="#"><img src="/static/settings_gear.png" alt="Icon 3"> Settings</a>
+            <a href="#"><img src="/static/user_profile.png" alt="Icon 4"> My Account</a>
+
+            <a href="/"><button class="bn30"></button></a>
+        </div>
+    </div>
+
+
+    {% block content %}
+    {% endblock %}
 
 </body>
 </html>
+
+
+
