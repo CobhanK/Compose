@@ -1,5 +1,4 @@
 body {
-    background-color: rgba(171, 172, 171, 0.642);
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -7,32 +6,48 @@ body {
     justify-content: center;
     height: 100vh;
     font-family: Helvetica, sans-serif;
+    margin: 0;
+    background-color: rgb(25, 24, 24);
+    background-image: url("/static/band_photo.png"); 
+    background-size: cover;  
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
 }
+
+
+/*hamburger menu code*/
 .menu {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 30px;
 }
 .menu button {
     background: none;
     border: none;
-    color: rgb(0, 0, 0);
-    font-size: 40px;
+    color: rgb(255, 255, 255);
+    font-size: 55px; /*hamburger size*/
     cursor: pointer;
 }
 .dropdown {
     display: none;
     position: absolute;
     right: 0;
-    background: rgb(255, 255, 255);
-    border: 1px solid rgb(0, 0, 0);
-    padding: 20px;
+    font-size: 26px; /*font of dropdown text*/
+    font-family: Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+   height: 8em;
+   width: 7.5em;
+    padding: 10px;
+
 }
 .dropdown a {
     color: rgb(0, 0, 0);
     text-decoration: none;
     display: flex;
-    align-items: center;
+    align-items:
+    center;
     padding: 5px 0;
 }
 .dropdown a img {
@@ -59,28 +74,56 @@ body {
 
 .menu:hover .dropdown {
     display: block;
-}
+} 
+
+
+
+
+/*Main Record Button Code*/
 .large-button {
     width: 450px;
     height: 450px;
-    background-color: rgb(27, 96, 49);
-    border-radius: 50%;
-    color: rgb(255, 255, 255);
+    border-radius: 1000px;
+    border-width: 6.5px;
+    border-style: solid;
+    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.438);
+     -webkit-transition: box-shadow 0.25s;
+     transition: box-shadow 0.25s;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 40px;
     cursor: pointer;
-    border: none;
     margin-bottom: 20px;
 }
+.large-button {
+    background-image: linear-gradient(-45deg, #b81a1aba, #c01c1c );
+    z-index: 1;
+}
+
+.large-button:hover {
+box-shadow: 0px 1px 16px rgba(255, 255, 255, 0.438);
+background-image: linear-gradient(-45deg, #b81a1a3d, #c01c1c34 );
+}
+
+
+/*Code for upload file button*/
 .small-button {
-    width: 300px;
-    height: 35px;
-    background-color: rgb(62, 199, 62);
-    border-radius: 20px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
+    padding: 0.4em 1.6em;
+    margin: 0 0.em 0.1em 0;
+    border: 0.1em solid rgb(255, 255, 255, .3);
+    border-radius: 3em;
+    text-decoration: none;
+    font-family: "Helvetica", sans-serif;
+    font-weight: 300;
+    color: #ffffff;
+    text-shadow: 0 0.04em 0.04em rgba(255, 255, 255, 0.253);
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.small-button:hover {
+    color: black;
+    background-color: rgb(255, 255, 255);
 }

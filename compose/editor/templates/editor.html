@@ -1,52 +1,26 @@
-{% extends "master.html" %}
-
 {% load static %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
 
-    {% include "editor-bar.html" %}
-    <div id="canvas-container">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="{% static 'editor.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="{% static 'editor.js' %}"></script>
-    <button onclick="printHello()">Click me!</button>
+</head>
 
-    <canvas id="scoreCanvas" style="background-color: aliceblue;"></canvas>
-
-    <script type="module">
-        import { Renderer, Stave } from "https://unpkg.com/vexflow@4.0.0/build/esm/vexflow.js";
-    
-        // Set up the canvas
-        const canvas = document.getElementById("scoreCanvas");
-        const width = 800;
-        const height = 1100;
-        canvas.width = width;
-        canvas.height = height;
-    
-        // Create a renderer
-        const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
-        const context = renderer.getContext();
-        context.setFont("Arial", 10);
-    
-        // Define number of staves and spacing
-        const numStaves = 5;
-        const staveSpacing = 100;
-        const marginLeft = 50;
-        let y = 50;
-        const timeSignature ='4/4'
-    
-        // Draw multiple staves
-        let stave_treb = new Stave(marginLeft, y, width - 100).addClef('treble').addTimeSignature(timeSignature);
-        stave_treb.setContext(context).draw();
-        y += staveSpacing;
-
-        let stave_bass = new Stave(marginLeft, y, width - 100).addClef('bass').addTimeSignature(timeSignature);
-        stave_bass.setContext(context).draw();
-        y += staveSpacing;
-
-            
+<body>
+    <div id="canvas-container" style="align-items: center;">
         
-    </script>
-    
+        <!-- <canvas id="scoreCanvas" style="background-color: aliceblue;"></canvas> -->
+
+        <div id="output"></div>
+        <script>renderScore()</script>
     </div>
-    
-{% endblock %}
+</body>
+
+</html>
