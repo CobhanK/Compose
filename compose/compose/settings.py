@@ -54,8 +54,7 @@ ROOT_URLCONF = 'compose.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ #BASE_DIR / "compose/static",
-                    BASE_DIR / "main/templates", 
+        'DIRS': [   BASE_DIR / "main/templates", 
                     BASE_DIR / "editor/templates"], 
         'APP_DIRS': True,
         'OPTIONS': {
@@ -117,7 +116,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'main/static',
+    BASE_DIR / 'compose/static',
+    BASE_DIR / 'editor/static',
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

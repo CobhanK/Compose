@@ -1,0 +1,106 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <h1>Hello World from Editor</h1>
+    <a href="/record">Record</a>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Sheet Music</title>
+        <script src="https://unpkg.com/vexflow/releases/vexflow-min.js"></script>
+        <style>
+            canvas {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Click a Note!</h3>
+        <canvas id="musicCanvas" width="500" height="200"></canvas>
+        <p id="noteInfo"></p>
+    
+        <script>
+            // Initialize VexFlow
+            const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
+    
+            // Get Canvas and Setup Renderer
+            const canvas = document.getElementById("musicCanvas");
+            const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
+            const context = renderer.getContext();
+    
+            // Create a stave (staff)
+            const stave = new Stave(10, 40, 400);
+            stave.addClef("treble").addTimeSignature("4/4");
+            stave.setContext(context).draw();
+    
+            // Define notes
+            const notes = [
+                new StaveNote({ keys: ["c/4"], duration: "q" }),
+                new StaveNote({ keys: ["d/4"], duration: "q" }),
+                new StaveNote({ keys: ["e/4"], duration: "q" }),
+                new StaveNote({ keys: ["f/4"], duration: "q" })
+            ];
+    
+            // Create a voice
+            const voice = new Voice({ num_beats: 4, beat_value: 4 }).addTickables(notes);
+    
+            // Format and draw
+            new Formatter().joinVoices([voice]).format([voice], 400);
+            voice.draw(context, stave);
+    
+            // 🎯 Store note positions
+            let notePositions = [];
+            notes.forEach((note, index) => {
+                const bbox = note.getBoundingBox();
+                if (bbox) {
+                    notePositions.push({
+                        index: index,
+                        note: note.keys[0],  // First key (e.g., "c/4")
+                        x1: bbox.x,
+                        x2: bbox.x + bbox.w,
+                        y1: bbox.y,
+                        y2: bbox.y + bbox.h
+                    });
+                }
+            });
+    
+            // 🎯 Event Listener for Clicks
+            canvas.addEventListener("click", function(event) {
+                const rect = canvas.getBoundingClientRect();
+                const clickX = event.clientX - rect.left;
+                const clickY = event.clientY - rect.top;
+    
+                // Check if click is within any note's bounding box
+                for (let i = 0; i < notePositions.length; i++) {
+                    let n = notePositions[i];
+                    if (clickX >= n.x1 && clickX <= n.x2 && clickY >= n.y1 && clickY <= n.y2) {
+                        document.getElementById("noteInfo").innerText = `Clicked Note: ${n.note}`;
+                        sendNoteToBackend(n.note);
+                        break;
+                    }
+                }
+            });
+    
+            // 🎼 Function to Send Clicked Note to Django Backend
+            function sendNoteToBackend(note) {
+                fetch('/api/note-clicked/', { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify({ note: note }) 
+                })
+                .then(response => response.json())
+                .then(data => console.log("Server Response:", data))
+                .catch(error => console.error("Error:", error));
+            }
+        </script>
+    </body>
+    </html>
+    
+
+{% endblock %}

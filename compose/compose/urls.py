@@ -17,10 +17,13 @@ Including another URLconf
 #compose/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from main.views import index
+from django.views.generic.base import RedirectView
+
+favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('editor/', include('editor.urls')),
+    path('favicon.ico', favicon_view),
 ]

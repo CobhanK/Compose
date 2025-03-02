@@ -4,7 +4,49 @@
 
 {% block content %}
 
-    <h1>Hello World from Editor</h1>
-    <a href="/record">Record</a>
+    {% include "editor-bar.html" %}
+    <div id="canvas-container">
 
+    <script src="{% static 'editor.js' %}"></script>
+    <button onclick="printHello()">Click me!</button>
+
+    <canvas id="scoreCanvas" style="background-color: aliceblue;"></canvas>
+
+    <script type="module">
+        import { Renderer, Stave } from "https://unpkg.com/vexflow@4.0.0/build/esm/vexflow.js";
+    
+        // Set up the canvas
+        const canvas = document.getElementById("scoreCanvas");
+        const width = 800;
+        const height = 1100;
+        canvas.width = width;
+        canvas.height = height;
+    
+        // Create a renderer
+        const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
+        const context = renderer.getContext();
+        context.setFont("Arial", 10);
+    
+        // Define number of staves and spacing
+        const numStaves = 5;
+        const staveSpacing = 100;
+        const marginLeft = 50;
+        let y = 50;
+        const timeSignature ='4/4'
+    
+        // Draw multiple staves
+        let stave_treb = new Stave(marginLeft, y, width - 100).addClef('treble').addTimeSignature(timeSignature);
+        stave_treb.setContext(context).draw();
+        y += staveSpacing;
+
+        let stave_bass = new Stave(marginLeft, y, width - 100).addClef('bass').addTimeSignature(timeSignature);
+        stave_bass.setContext(context).draw();
+        y += staveSpacing;
+
+            
+        
+    </script>
+    
+    </div>
+    
 {% endblock %}
