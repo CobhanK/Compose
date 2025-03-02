@@ -1,20 +1,56 @@
 <head>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor</title>
+  <style>
+      body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+      }
+      .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background-color: #c7c7c7;
+          padding: 10px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: white;
+      }
+      .navbar .logo {
+          font-size: 20px;
+          font-weight: bold;
+      }
+      .navbar .nav-buttons {
+          display: flex;
+          gap: 10px;
+      }
+      .navbar .nav-buttons button {
+          background-color: #555;
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          cursor: pointer;
+          border-radius: 5px;
+      }
+      .navbar .nav-buttons button:hover {
+          background-color: #777;
+      }
+      .content {
+          margin-top: 60px;
+          padding: 20px;
+      }
+  </style>
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Editor</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">Editor</a>
-  
-    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Add Note <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Time Signature</a>
-        </li>
-    </div> -->
-  </nav>
+
+  <div class="navbar">
+      <div class="logo">Editor</div>
+      <div class="nav-buttons">
+          <button>Add Note</button>
+          <button>Timing</button>
+          <button>Add Rest</button>
+      </div>
+      {% include 'hamburger.html' %}
+  </div>
