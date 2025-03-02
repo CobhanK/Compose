@@ -1,0 +1,59 @@
+/*hamburger menu code*/
+.menu {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+}
+.menu button {
+    background: none;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-size: 55px; /*hamburger size*/
+    cursor: pointer;
+}
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    font-size: 26px; /*font of dropdown text*/
+    font-family: Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+   height: 8em;
+   width: 7.5em;
+    padding: 10px;
+
+}
+.dropdown a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: flex;
+    align-items:
+    center;
+    padding: 5px 0;
+}
+.dropdown a img {
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+}
+
+.dropdown b {
+    color: rgb(13, 50, 35);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.dropdown c {
+    color: rgb(23, 11, 46);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.menu:hover .dropdown {
+    display: block;
+} 
