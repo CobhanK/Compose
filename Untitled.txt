@@ -1,0 +1,17 @@
+            // Parse Treble Notes Data
+            const trebleNoteData = JSON.parse(document.getElementById('treble-note-data').textContent);
+            const trebleNotes = trebleNoteData.map(([note, dura]) => 
+                new StaveNote({
+                    keys: [note],
+                    duration: dura,
+                })
+            );
+
+            // Parse Bass Notes Data
+            const bassNoteData = JSON.parse(document.getElementById('bass-note-data').textContent);
+            const bassNotes = bassNoteData.map(([note, dura]) => 
+                new StaveNote({
+                    keys: [note],
+                    duration: dura,
+                })
+            );

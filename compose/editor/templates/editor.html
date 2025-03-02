@@ -9,7 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="{% static 'editor.css' %}">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
     <script src="{% static 'editor.js' %}"></script>
@@ -23,11 +26,10 @@
         
         <div id="music-container"></div>
 
+        <!-- //This works but possible vuln -->
         <script>
             const { StaveNote } = Vex.Flow;
 
-            //This works do not touch
-            
             /* eslint-disable */
             const trebleNotes = [
                 {% for note, dura in treble_note_list %}
@@ -48,7 +50,7 @@
                 {% endfor %}
             ];
             /* eslint-enable */
-
+                
             drawGrandStaff(trebleNotes, bassNotes);
         </script>
     </div>
