@@ -29,8 +29,8 @@ midi_notes = librosa.hz_to_midi(f0)
 # and replacing the Unicode symbols for sharps and flats.
 notes = [
     (librosa.midi_to_note(int(round(m)))
-     .replace('\u266f', 's')  # Replace sharp (♯) with 's'
-     .replace('\u266d', 'f')) # Replace flat (♭) with 'f'
+     .replace('\u266f', '#')  # Replace sharp (♯) with 's'
+     .replace('\u266d', 'b')) # Replace flat (♭) with 'f'
     if np.isfinite(m) else None
     for m in midi_notes
 ]
