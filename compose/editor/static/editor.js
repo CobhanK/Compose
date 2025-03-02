@@ -1,86 +1,84 @@
-function renderScore() {
+// import { Renderer, Stave, StaveNote, Voice, Formatter } from "https://unpkg.com/vexflow@4.0.0/build/esm/vexflow.js";
+
+function drawGrandStaff(notesTreble = [], notesBass = []) {
     const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
+    // Create a canvas dynamically
+    const container = document.getElementById("music-container");
+    container.innerHTML = ""; // Clear previous content
 
-    // Create an SVG renderer and attach it to the DIV element named "output".
-    const div = document.getElementById("output");
-    const renderer = new Renderer(div, Renderer.Backends.SVG);
-
-    // Configure the rendering context.
-    renderer.resize(500, 500);
-    const context = renderer.getContext();
-
-    // Create a stave of width 400 at position 10, 40 on the canvas.
-    const stave = new Stave(10, 40, 400);
-
-    // Add a clef and time signature.
-    stave.addClef("treble").addTimeSignature("4/4");
-
-    // Connect it to the rendering context and draw!
-    stave.setContext(context).draw();
-}
-
-// function renderScore() {
-//     // Create an SVG renderer and attach it to the DIV element named "boo".
-//     const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
-
-// // Create an SVG renderer and attach it to the DIV element named "output".
-// const div = document.getElementById("output");
-// const renderer = new Renderer(div, Renderer.Backends.SVG);
-
-// // Configure the rendering context.
-// renderer.resize(500, 500);
-// const context = renderer.getContext();
-
-//     system.addStave({
-//         voices: [
-//           score.voice(score.notes('C#5/q, B4, A4, G#4', {stem: 'up'})),
-//           score.voice(score.notes('C#4/h, C#4', {stem: 'down'}))
-//         ]
-//       }).addClef('treble').addTimeSignature('4/4');
-      
-//       system.addStave({
-//         voices: [
-//           score.voice(score.notes('C#3/q, B2, A2/8, B2, C#3, D3', {clef: 'bass', stem: 'up'})),
-//           score.voice(score.notes('C#2/h, C#2', {clef: 'bass', stem: 'down'}))
-//         ]
-//       }).addClef('bass').addTimeSignature('4/4');
-      
-//       system.addConnector();
-//       vf.draw();
-// }
-
-
-// function renderScore() {
-//     import { Renderer, Stave } from "https://unpkg.com/vexflow@4.0.0/build/esm/vexflow.js";
+    const canvas = document.createElement("canvas");
+    container.appendChild(canvas);
     
-//     // Set up the canvas
-//     const canvas = document.getElementById("scoreCanvas");
-//     const width = 800;
-//     const height = 1100;
-//     canvas.width = width;
-//     canvas.height = height;
+    const width = 800;
+    const height = 300;
+    canvas.width = width;
+    canvas.height = height;
 
-//     // Create a renderer
-//     const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
-//     const context = renderer.getContext();
-//     context.setFont("Arial", 10);
+    // Set up the renderer
+    const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
+    const context = renderer.getContext();
+    context.setFont("Arial", 10);
 
-//     // Define number of staves and spacing
-//     const numStaves = 5;
-//     const staveSpacing = 100;
-//     const marginLeft = 50;
-//     let y = 50;
-//     const timeSignature ='4/4'
+    // Stave settings
+    const marginLeft = 50;
+    const staveWidth = width - 100;
 
-//     // Draw multiple staves
-//     let stave_treb = new Stave(marginLeft, y, width - 100).addClef('treble').addTimeSignature(timeSignature);
-//     stave_treb.setContext(context).draw();
-//     y += staveSpacing;
+    // Treble Clef Stave
+    const stave_treble = new Stave(marginLeft, 40, staveWidth);
+    stave_treble.addClef("treble").addTimeSignature("4/4");
+    stave_treble.setContext(context).draw();
 
-//     let stave_bass = new Stave(marginLeft, y, width - 100).addClef('bass').addTimeSignature(timeSignature);
-//     stave_bass.setContext(context).draw();
-//     y += staveSpacing;
+    // Bass Clef Stave
+    const stave_bass = new Stave(marginLeft, 140, staveWidth);
+    stave_bass.addClef("bass").addTimeSignature("4/4");
+    stave_bass.setContext(context).draw();
 
-        
+    //Draw Treble Notes
+    // Create a voice in 4/4 and add above notes
+    const voice_treble = new Voice({ num_beats: 4, beat_value: 4 });
+    voice_treble.addTickables(notesTreble);
 
+    // Format and justify the notes to 400 pixels.
+    new Formatter().joinVoices([voice_treble]).format([voice_treble], 350);
+
+    // Render voice
+    voice_treble.draw(context, stave_treble);
+    
+        //Draw Treble Notes
+    // Create a voice in 4/4 and add above notes
+    const voice_bass = new Voice({ num_beats: 4, beat_value: 4 });
+    voice_bass.addTickables(notesBass);
+
+    // Format and justify the notes to 400 pixels.
+    new Formatter().joinVoices([voice_bass]).format([voice_bass], 350);
+
+    // Render voice
+    voice_bass.draw(context, stave_bass);
+}
+    // // Convert notes into VexFlow format
+    // const formatNotes = (notes) => notes.map(n => {
+    //     const [keys, duration] = n.split("/");
+    //     return new StaveNote({ keys: [keys], duration });
+    // });
+
+    // const trebleNotes = formatNotes(notesTreble);
+    // const bassNotes = formatNotes(notesBass);
+
+    // // Create voices for both staves
+    // const createVoice = (notes) => {
+    //     const voice = new Voice({ num_beats: 4, beat_value: 4 });
+    //     voice.addTickables(notes);
+    //     return voice;
+    // };
+
+    // const voiceTreble = createVoice(trebleNotes);
+    // const voiceBass = createVoice(bassNotes);
+
+    // // Format and join the notes on the same line
+    // new Formatter().joinVoices([voiceTreble]).format([voiceTreble], staveWidth - 50);
+    // new Formatter().joinVoices([voiceBass]).format([voiceBass], staveWidth - 50);
+
+    // // Render the notes
+    // voiceTreble.draw(context, stave_treble);
+    // voiceBass.draw(context, stave_bass);
 // }

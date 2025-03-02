@@ -4,23 +4,55 @@
 <html lang="en">
 
 <head>
+    <title>Editor</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="{% static 'editor.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
     <script src="{% static 'editor.js' %}"></script>
 </head>
+
+{% include 'editor-bar.html' %}
+{% include 'hamburger.html' %}
 
 <body>
     <div id="canvas-container" style="align-items: center;">
         
-        <!-- <canvas id="scoreCanvas" style="background-color: aliceblue;"></canvas> -->
+        <div id="music-container"></div>
 
-        <div id="output"></div>
-        <script>renderScore()</script>
+        <script>
+            const { StaveNote } = Vex.Flow;
+
+            //This works do not touch
+            
+            /* eslint-disable */
+            const trebleNotes = [
+                {% for note, dura in treble_note_list %}
+                    new StaveNote({
+                        keys: [ {{ note|safe }} ],
+                        duration: {{ dura|safe }} ,
+                    }),
+                {% endfor %}
+            ]
+                
+            //This works do not touch
+            const bassNotes = [
+                {% for note, dura in bass_note_list %}
+                    new StaveNote({
+                        keys: [ {{ note|safe }} ],
+                        duration: {{ dura|safe }} ,
+                    }),
+                {% endfor %}
+            ];
+            /* eslint-enable */
+
+            drawGrandStaff(trebleNotes, bassNotes);
+        </script>
     </div>
 </body>
 
 </html>
+
