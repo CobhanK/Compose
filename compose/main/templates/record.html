@@ -17,7 +17,75 @@
             <a href="#"><img src="icon3.png" alt="Icon 3"> Settings</a>
         </div>
     </div> -->
-    <button class="large-button">Record</button>
+    <button id="large-button" class="large-button">Record</button>
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        let stream;
+
+        // Select the existing <a> tag
+        const recordButton = document.getElementById("large-button");
+
+        recordButton.addEventListener("click", async (event) => {
+            event.preventDefault(); // Prevent <a> default navigation
+
+            if (!isRecording) {
+                try {
+                    // Request microphone access
+                    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                    // Create MediaRecorder
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = async () => {
+                        let audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+
+                        // Send the audio as a POST request
+                        let formData = new FormData();
+                        formData.append("audio", audioBlob, "recorded-audio.wav");
+
+                        try {
+                            let response = await fetch("https://your-server.com/upload", { // Replace with your server endpoint
+                                method: "POST",
+                                body: formData
+                            });
+if (response.ok) {
+                                console.log("✅ Audio uploaded successfully!");
+                                alert("Audio uploaded successfully!");
+                            } else {
+                                console.error("❌ Upload failed:", response.statusText);
+                                alert("Upload failed. Please try again.");
+                            }
+                        } catch (error) {
+                            console.error("❌ Error uploading audio:", error);
+                            alert("Error uploading audio.");
+                        }
+
+                        // Stop microphone stream
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    recordButton.textContent = "Stop Recording"; // Update button text
+                    isRecording = true;
+                } catch (error) {
+                    console.error("Error accessing microphone:", error);
+                    alert("Microphone access denied or unavailable.");
+                }
+            } else {
+                // Stop recording
+                mediaRecorder.stop();
+                isRecording = false;
+            }
+        });
+    </script>
+    
     <button class="small-button">Upload File</button>
 
 
