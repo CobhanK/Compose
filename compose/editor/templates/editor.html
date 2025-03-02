@@ -6,6 +6,10 @@
 
     {% include "editor-bar.html" %}
     <div id="canvas-container">
+
+    <script src="{% static 'editor.js' %}"></script>
+    <button onclick="printHello()">Click me!</button>
+
     <canvas id="scoreCanvas" style="background-color: aliceblue;"></canvas>
 
     <script type="module">
@@ -31,17 +35,16 @@
         const timeSignature ='4/4'
     
         // Draw multiple staves
-        for (let i = 0; i < numStaves; i++) {
-            let stave_treb = new Stave(marginLeft, y, width - 100).addClef('treble').addTimeSignature(timeSignature);
-            stave_treb.setContext(context).draw();
-            y += staveSpacing;
+        let stave_treb = new Stave(marginLeft, y, width - 100).addClef('treble').addTimeSignature(timeSignature);
+        stave_treb.setContext(context).draw();
+        y += staveSpacing;
 
-            let stave_bass = new Stave(marginLeft, y, width - 100).addClef('bass').addTimeSignature(timeSignature);
-            stave_bass.setContext(context).draw();
-            y += staveSpacing;
+        let stave_bass = new Stave(marginLeft, y, width - 100).addClef('bass').addTimeSignature(timeSignature);
+        stave_bass.setContext(context).draw();
+        y += staveSpacing;
 
             
-        }
+        
     </script>
     
     </div>

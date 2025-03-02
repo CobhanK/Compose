@@ -118,7 +118,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'compose/static'
+    BASE_DIR / 'compose/static',
+    BASE_DIR / 'editor/static',
 ]
 
 
